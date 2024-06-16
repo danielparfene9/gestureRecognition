@@ -60,7 +60,7 @@ def main():
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(
         static_image_mode=use_static_image_mode,
-        max_num_hands=2,
+        max_num_hands=1,
         min_detection_confidence=min_detection_confidence,
         min_tracking_confidence=min_tracking_confidence,
     )
@@ -150,8 +150,6 @@ def select_mode(key, mode):
         mode = 0
     if key == 107:  # k
         mode = 1
-    if key == 104:  # h
-        mode = 2
     return number, mode
 
 
@@ -380,7 +378,7 @@ def draw_info(image, fps, mode, number):
     cv.putText(image, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
                1.0, (255, 255, 255), 2, cv.LINE_AA)
 
-    mode_string = ['Logging Key Point', 'Logging Point History']
+    mode_string = ['Logging Key Point']
     if 1 <= mode <= 2:
         cv.putText(image, "MODE:" + mode_string[mode - 1], (10, 90),
                    cv.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1,
