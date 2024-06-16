@@ -146,9 +146,9 @@ def select_mode(key, mode):
     number = -1
     if 48 <= key <= 57:  # 0 ~ 9
         number = key - 48
-    if key == 110:  # n
+    if key == 114:  # r - reset
         mode = 0
-    if key == 107:  # k
+    if key == 116:  # t - train
         mode = 1
     return number, mode
 
