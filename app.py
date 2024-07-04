@@ -142,10 +142,28 @@ def main():
     cv.destroyAllWindows()
 
 
-def select_mode(key, mode):
+def select_mode(key, modifiers, mode):
+
+    SHIFT_MODIFIER = 1 << 0
+    CTRL_MODIFIER = 1 << 1
+    ALT_MODIFIER = 1 << 2
+
     number = -1
-    if 48 <= key <= 57:  # 0 ~ 9
-        number = key - 48
+    base_number = key - 48 if 48 <= key <= 57 else -1
+
+    # if 48 <= key <= 57:  # 0 ~ 9
+    #     number = key - 48
+
+    if base_number != -1:
+        if modifiers & SHIFT_MODIFIER:
+            number = base_number + 10
+        elif modifiers & CTRL_MODIFIER:
+            number = base_number + 20
+        elif modifiers & ALT_MODIFIER:
+            number = base_number + 30
+        else:
+            number = base_number
+
     if key == 114:  # r - reset
         mode = 0
     if key == 116:  # t - train
@@ -217,7 +235,7 @@ def pre_process_landmark(landmark_list):
 def logging_csv(number, mode, landmark_list):
     if mode == 0:
         pass
-    if mode == 1 and (0 <= number <= 9):
+    if mode == 1 and (0 <= number <= 39):
         csv_path = 'model/keypoint_classifier/keypoint.csv'
         with open(csv_path, 'a', newline="") as f:
             writer = csv.writer(f)
